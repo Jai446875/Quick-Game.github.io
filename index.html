@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Maze Game Menu</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e5799 0%,#2989d8 50%,#207cca 51%,#7db9e8 100%);
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+    
+    .menu-container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 80%;
+    }
+    
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+    }
+    
+    .game-button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 15px 25px;
+      font-size: 1.2em;
+      color: white;
+      background-color: #3498db;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .game-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      background-color: #2980b9;
+    }
+    
+    .game-button:active {
+      transform: translateY(1px);
+    }
+    
+    .quick-game {
+      background-color: #2ecc71;
+    }
+    
+    .quick-game:hover {
+      background-color: #27ae60;
+    }
+    
+    .endless-game {
+      background-color: #e74c3c;
+    }
+    
+    .endless-game:hover {
+      background-color: #c0392b;
+    }
+    
+    .game-description {
+      color: #7f8c8d;
+      margin-top: 30px;
+      font-size: 0.9em;
+      line-height: 1.5;
+    }
+    
+    .stats-container {
+      margin-top: 30px;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+    }
+    
+    .stats-title {
+      color: #2c3e50;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .stat-label {
+      font-weight: bold;
+      color: #34495e;
+    }
+    
+    .stat-value {
+      color: #3498db;
+      font-weight: bold;
+    }
+    
+    .no-stats {
+      text-align: center;
+      color: #7f8c8d;
+      font-style: italic;
+    }
+    
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    
+    .tab-button {
+      padding: 8px 20px;
+      background: #ecf0f1;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .tab-button:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+    
+    .tab-button:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+    
+    .tab-button.active {
+      background: #3498db;
+      color: white;
+    }
+    
+    .high-scores {
+      margin-top: 20px;
+    }
+    
+    .high-score-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .high-score-name {
+      font-weight: bold;
+    }
+    
+    .high-score-value {
+      color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-container">
+    <h1>Maze Adventure</h1>
+    <a href="Quickgame.html" class="game-button quick-game">Quick Game</a>
+    <a href="Endlessgame.html" class="game-button endless-game">Endless Game</a>
+    
+    <div class="game-description">
+      <p><strong>Quick Game:</strong> Complete 5 rounds of randomly generated mazes as fast as you can!</p>
+      <p><strong>Endless Game:</strong> Keep solving increasingly difficult mazes until time runs out.</p>
+    </div>
+    
+    <div class="stats-container">
+      <div class="stats-title">Your Game Statistics</div>
+      <div class="tabs">
+        <button class="tab-button active" onclick="showStats('quick')">Quick Game</button>
+        <button class="tab-button" onclick="showStats('endless')">Endless Game</button>
+      </div>
+      
+      <div id="quick-stats" class="stats-content">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-label">Games Played:</span>
+            <span id="quick-games" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Best Time:</span>
+            <span id="quick-best-time" class="stat-value">-</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Highest Score:</span>
+            <span id="quick-high-score" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Total Score:</span>
+            <span id="quick-total-score" class="stat-value">0</span>
+          </div>
+        </div>
+        
+        <div class="high-scores">
+          <h3>Quick Game High Scores:</h3>
+          <div id="quick-high-scores-list"></div>
+        </div>
+      </div>
+      
+      <div id="endless-stats" class="stats-content" style="display:none;">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-label">Games Played:</span>
+            <span id="endless-games" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Highest Level:</span>
+            <span id="endless-high-level" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Highest Score:</span>
+            <span id="endless-high-score" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Total Score:</span>
+            <span id="endless-total-score" class="stat-value">0</span>
+          </div>
+        </div>
+        
+        <div class="high-scores">
+          <h3>Endless Game High Scores:</h3>
+          <div id="endless-high-scores-list"></div>
+        </div>
+      </div>
+      
+      <div id="no-stats" class="no-stats" style="display:none;">
+        No statistics available yet. Play some games to see your progress!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Constants for localStorage keys (must match your game pages)
+    const QUICK_GAME_HIGH_SCORES_KEY = 'mazeGameHighScores';
+    const ENDLESS_GAME_HIGH_SCORES_KEY = 'endlessMazeHighScores';
+    const QUICK_GAME_STATS_KEY = 'quickGameStats';
+    const ENDLESS_GAME_STATS_KEY = 'endlessGameStats';
+    
+    // Initialize stats when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      loadAndDisplayStats();
+    });
+    
+    function loadAndDisplayStats() {
+      // Load quick game high scores and stats
+      let quickHighScores = JSON.parse(localStorage.getItem(QUICK_GAME_HIGH_SCORES_KEY)) || [];
+      let quickStats = JSON.parse(localStorage.getItem(QUICK_GAME_STATS_KEY)) || {
+        gamesPlayed: 0,
+        bestTime: null,
+        highScore: 0,
+        totalScore: 0
+      };
+      
+      // Load endless game high scores and stats
+      let endlessHighScores = JSON.parse(localStorage.getItem(ENDLESS_GAME_HIGH_SCORES_KEY)) || [];
+      let endlessStats = JSON.parse(localStorage.getItem(ENDLESS_GAME_STATS_KEY)) || {
+        gamesPlayed: 0,
+        highLevel: 0,
+        highScore: 0,
+        totalScore: 0
+      };
+      
+      // Update quick game stats display
+      document.getElementById('quick-games').textContent = quickStats.gamesPlayed;
+      document.getElementById('quick-best-time').textContent = quickStats.bestTime ? formatTime(quickStats.bestTime) : '-';
+      document.getElementById('quick-high-score').textContent = quickStats.highScore;
+      document.getElementById('quick-total-score').textContent = quickStats.totalScore;
+      
+      // Update endless game stats display
+      document.getElementById('endless-games').textContent = endlessStats.gamesPlayed;
+      document.getElementById('endless-high-level').textContent = endlessStats.highLevel;
+      document.getElementById('endless-high-score').textContent = endlessStats.highScore;
+      document.getElementById('endless-total-score').textContent = endlessStats.totalScore;
+      
+      // Display high scores
+      displayHighScores(quickHighScores, 'quick-high-scores-list');
+      displayHighScores(endlessHighScores, 'endless-high-scores-list');
+      
+      // Show "no stats" message if no games played
+      if (quickStats.gamesPlayed === 0 && endlessStats.gamesPlayed === 0) {
+        document.getElementById('no-stats').style.display = 'block';
+        document.getElementById('quick-stats').style.display = 'none';
+        document.getElementById('endless-stats').style.display = 'none';
+      }
+    }
+    
+    function displayHighScores(scores, elementId) {
+      const container = document.getElementById(elementId);
+      container.innerHTML = '';
+      
+      if (scores.length === 0) {
+        container.innerHTML = '<p>No high scores yet</p>';
+        return;
+      }
+      
+      // Sort scores (highest first)
+      scores.sort((a, b) => b.score - a.score);
+      
+      // Display top 10 scores
+      const topScores = scores.slice(0, 10);
+      topScores.forEach((score, index) => {
+        const scoreElement = document.createElement('div');
+        scoreElement.className = 'high-score-item';
+        
+        const rank = document.createElement('span');
+        rank.textContent = `${index + 1}. ${score.name || 'Anonymous'}`;
+        
+        const scoreValue = document.createElement('span');
+        scoreValue.className = 'high-score-value';
+        scoreValue.textContent = score.score;
+        
+        if (score.date) {
+          const date = new Date(score.date);
+          const dateStr = document.createElement('span');
+          dateStr.className = 'high-score-date';
+          dateStr.textContent = date.toLocaleDateString();
+          scoreElement.appendChild(dateStr);
+        }
+        
+        scoreElement.appendChild(rank);
+        scoreElement.appendChild(scoreValue);
+        container.appendChild(scoreElement);
+      });
+    }
+    
+    function showStats(gameType) {
+      // Update active tab
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Show the correct stats panel
+      if (gameType === 'quick') {
+        document.getElementById('quick-stats').style.display = 'block';
+        document.getElementById('endless-stats').style.display = 'none';
+      } else {
+        document.getElementById('quick-stats').style.display = 'none';
+        document.getElementById('endless-stats').style.display = 'block';
+      }
+    }
+    
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins}m ${secs}s`;
+    }
+  </script>
+</body>
+</html>
